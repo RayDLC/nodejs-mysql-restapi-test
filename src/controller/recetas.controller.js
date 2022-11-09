@@ -75,8 +75,8 @@ export const updateReceta = async (req, res) => {
 
         const {id} = req.params
         const {rec_nombre, id_tipo, id_duracion, rec_ingredientes, rec_instrucciones} = req.body
-        
-        const [result] = await pool.query('update recetas set rec_nombre = ?, id_tipo = ?, id_duracion = ?, rec_ingredientes = IFNULL(?, rec_ingredientes), rec_instrucciones = IFNULL(?, rec_instrucciones) where id_receta = ?', [rec_nombre, id_tipo, id_duracion, rec_ingredientes, rec_instrucciones, id])
+
+        const [result] = await pool.query('update recetas set rec_nombre = IFNULL(?, rec_nombre), id_tipo = IFNULL(?, id_tipo), id_duracion = IFNULL(?, id_duracion), rec_ingredientes = IFNULL(?, rec_ingredientes), rec_instrucciones = IFNULL(?, rec_instrucciones) where id_receta = ?', [rec_nombre, id_tipo, id_duracion, rec_ingredientes, rec_instrucciones, id])
     
         if(result.affectedRows === 0) return res.status(404).json({
             message: "Receta no encontrada"
